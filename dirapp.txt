@@ -1,0 +1,12 @@
+.tencent-poc-captcha
+├── backend
+│   ├── package.json
+│   ├── package-lock.json
+│   └── src
+│       ├── routes
+│       │   └── captcha.js
+│       └── server.js
+
+├── dirapp.txt
+└── frontend
+    └── index.html

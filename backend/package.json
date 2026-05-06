@@ -1,0 +1,19 @@
+{
+  "name": "tencent-captcha-backend",
+  "version": "1.0.0",
+  "description": "Backend para validação do Tencent Captcha",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "dotenv": "^16.3.1",
+    "cors": "^2.8.5",
+    "tencentcloud-sdk-nodejs": "^4.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
