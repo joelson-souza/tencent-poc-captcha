@@ -3,110 +3,34 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Captcha Produção</title>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-    }
-
-    pre {
-      background: #111;
-      color: #0f0;
-      padding: 15px;
-      white-space: pre-wrap;
-      border-radius: 8px;
-    }
-
-    button {
-      padding: 10px 20px;
-      margin-bottom: 15px;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<h2>Captcha Teste</h2>
+  <div class="app-shell">
 
-<button id="btn">Validar Captcha</button>
+    <div class="app-container">
 
-<pre id="status">Aguardando...</pre>
+      <div class="card">
 
-<script src="https://ca.turing.captcha.qcloud.com/TJNCaptcha-global.js"></script>
+        <h2 class="title">Captcha Teste</h2>
 
-<script>
+        <button id="btn" class="btn">Validar Captcha</button>
 
-const btn = document.getElementById("btn");
-const status = document.getElementById("status");
+        <pre id="status" class="status">Aguardando...</pre>
 
-/**
- * 🔥 MOSTRA RAW EXATO
- */
-function set(obj) {
-  status.innerText =
-    typeof obj === "string"
-      ? obj
-      : JSON.stringify(obj, null, 2);
-}
+      </div>
 
-/**
- * 🔥 BACKEND CALL
- */
-async function sendToBackend(ticket, randstr) {
+    </div>
 
-  const res = await fetch("/api/captcha/verify", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ ticket, randstr })
-  });
+  </div>
 
-  const data = await res.json();
-
-  console.log("[BACKEND RAW]", data);
-
-  /**
-   * 🔥 EXIBIR EXATAMENTE COMO TENCENT
-   */
-  set({
-    "[CAPTCHA] Tencent Response": data.Response
-  });
-
-}
-
-btn.onclick = function () {
-
-  const container = document.createElement("div");
-  document.body.appendChild(container);
-
-  const captcha = new TencentCaptcha(
-    container,
-    "189904786",
-    function (res) {
-
-      console.log("CAPTCHA RESPONSE:", res);
-
-      container.remove();
-
-      if (res.ret === 0) {
-        set("Validando backend...");
-        sendToBackend(res.ticket, res.randstr);
-      } else {
-        set("Captcha cancelado");
-      }
-
-    },
-    {}
-  );
-
-  captcha.show();
-
-};
-
-</script>
+  <script src="https://ca.turing.captcha.qcloud.com/TJNCaptcha-global.js"></script>
+  <script src="app.js"></script>
 
 </body>
 

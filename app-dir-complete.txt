@@ -1,4 +1,5 @@
 .tencent-poc-captcha
+├── app-dir-complete.txt
 ├── backend
 │   ├── package.json
 │   ├── package-lock.json
@@ -6,7 +7,7 @@
 │       ├── routes
 │       │   └── captcha.js
 │       └── server.js
-
-├── dirapp.txt
 └── frontend
-    └── index.html
+    ├── app.js
+    ├── index.html
+    └── style.css
