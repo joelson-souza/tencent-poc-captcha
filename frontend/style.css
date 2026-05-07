@@ -76,6 +76,35 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
+.metrics {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: #cbd5e1;
+  font-size: 12px;
+}
+
+.bar {
+  height: 8px;
+  background: #1e293b;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.bar > div {
+  height: 100%;
+  background: linear-gradient(90deg, #22c55e, #3b82f6);
+  width: 0%;
+  transition: width 0.4s ease;
+}
+
 @media (max-width: 600px) {
   .card {
     padding: 18px;

@@ -1,0 +1,112 @@
+[
+  {
+    "traceId": "trace_e7e00a31be0761778111681287",
+    "timestamp": "2026-05-06T23:54:41.287Z",
+    "ip": "::ffff:190.107.160.119",
+    "tencentRequestId": "a1b2359d-1ef8-4f21-a174-f5dc05f8091b",
+    "logs": {
+      "backend_pure_ms": 0.085,
+      "tencent_ms": 280.793,
+      "total_ms": 280.881
+    },
+    "response": {
+      "RequestId": "a1b2359d-1ef8-4f21-a174-f5dc05f8091b",
+      "CaptchaCode": 1,
+      "CaptchaMsg": "OK",
+      "EvilLevel": 0,
+      "GetCaptchaTime": 0,
+      "SubmitCaptchaTime": 1778111679,
+      "EvilBitmap": 0,
+      "DeviceRiskCategory": "",
+      "Score": 40
+    }
+  },
+  {
+    "traceId": "trace_0ad8088227d131778112154880",
+    "timestamp": "2026-05-07T00:02:34.880Z",
+    "ip": "::ffff:190.107.160.119",
+    "tencentRequestId": "5a647d84-ac10-47c1-b4be-b76ee8b44636",
+    "logs": {
+      "backend_pure_ms": 0.082,
+      "tencent_ms": 280.961,
+      "total_ms": 281.046
+    },
+    "response": {
+      "RequestId": "5a647d84-ac10-47c1-b4be-b76ee8b44636",
+      "CaptchaCode": 1,
+      "CaptchaMsg": "OK",
+      "EvilLevel": 0,
+      "GetCaptchaTime": 0,
+      "SubmitCaptchaTime": 1778112152,
+      "EvilBitmap": 0,
+      "DeviceRiskCategory": "",
+      "Score": 40
+    }
+  },
+  {
+    "traceId": "trace_e1b67b136c7cf1778112216462",
+    "timestamp": "2026-05-07T00:03:36.462Z",
+    "ip": "::ffff:190.107.160.119",
+    "tencentRequestId": "1cc5516d-8e4f-4cdb-ae0c-a40c28a7be04",
+    "logs": {
+      "backend_pure_ms": 0.034,
+      "tencent_ms": 243.534,
+      "total_ms": 243.568
+    },
+    "response": {
+      "RequestId": "1cc5516d-8e4f-4cdb-ae0c-a40c28a7be04",
+      "CaptchaCode": 1,
+      "CaptchaMsg": "OK",
+      "EvilLevel": 0,
+      "GetCaptchaTime": 0,
+      "SubmitCaptchaTime": 1778112213,
+      "EvilBitmap": 0,
+      "DeviceRiskCategory": "",
+      "Score": 40
+    }
+  },
+  {
+    "traceId": "trace_d8a35b52b9bb91778112302356",
+    "timestamp": "2026-05-07T00:05:02.356Z",
+    "ip": "::ffff:190.107.160.119",
+    "tencentRequestId": "bc496199-a6df-4053-bb81-61103cc66c55",
+    "logs": {
+      "backend_pure_ms": 0.091,
+      "tencent_ms": 282.951,
+      "total_ms": 283.043
+    },
+    "response": {
+      "RequestId": "bc496199-a6df-4053-bb81-61103cc66c55",
+      "CaptchaCode": 1,
+      "CaptchaMsg": "OK",
+      "EvilLevel": 0,
+      "GetCaptchaTime": 0,
+      "SubmitCaptchaTime": 1778112300,
+      "EvilBitmap": 0,
+      "DeviceRiskCategory": "",
+      "Score": 40
+    }
+  },
+  {
+    "traceId": "trace_5c4e0562e78731778112638373",
+    "timestamp": "2026-05-07T00:10:38.373Z",
+    "ip": "::ffff:190.107.160.119",
+    "tencentRequestId": "9a0c41f3-5d5c-48d8-97fa-ff568920b071",
+    "logs": {
+      "backend_pure_ms": 0.083,
+      "tencent_ms": 272.443,
+      "total_ms": 272.527
+    },
+    "response": {
+      "RequestId": "9a0c41f3-5d5c-48d8-97fa-ff568920b071",
+      "CaptchaCode": 1,
+      "CaptchaMsg": "OK",
+      "EvilLevel": 0,
+      "GetCaptchaTime": 0,
+      "SubmitCaptchaTime": 1778112636,
+      "EvilBitmap": 0,
+      "DeviceRiskCategory": "",
+      "Score": 40
+    }
+  }
+]

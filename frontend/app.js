@@ -1,9 +1,6 @@
 const btn = document.getElementById("btn");
 const status = document.getElementById("status");
 
-/**
- * 🔥 MOSTRA RAW EXATO
- */
 function set(obj) {
   status.innerText =
     typeof obj === "string"
@@ -12,10 +9,22 @@ function set(obj) {
 }
 
 /**
- * 🔥 BACKEND CALL
+ * 💾 salva histórico local (para dashboard)
  */
-async function sendToBackend(ticket, randstr) {
+function saveToDashboard(data) {
+  const history = JSON.parse(localStorage.getItem("captcha_history") || "[]");
 
+  history.unshift({
+    ...data,
+    savedAt: new Date().toISOString()
+  });
+
+  if (history.length > 50) history.pop();
+
+  localStorage.setItem("captcha_history", JSON.stringify(history));
+}
+
+async function sendToBackend(ticket, randstr) {
   const res = await fetch("/api/captcha/verify", {
     method: "POST",
     headers: {
@@ -26,24 +35,22 @@ async function sendToBackend(ticket, randstr) {
 
   const data = await res.json();
 
-  console.log("[BACKEND RAW]", data);
+  const payload = {
+    captcha_result: data.Response,   // 🔥 CORRETO AGORA
+    validation: data.validation,
+    audit: {
+      traceId: data.audit?.traceId,
+      tencent_request_id: data.audit?.tencentRequestId,
+      backend_ms: data.validation?.backend_validation_ms
+    }
+  };
 
-  /**
-   * 🔥 EXIBIR EXATAMENTE COMO TENCENT
-   */
-  set({
-    "[CAPTCHA] Tencent Response": data.Response
-  });
-
+  set(payload);
+  saveToDashboard(payload);
 }
-
 btn.onclick = function () {
-
   const container = document.createElement("div");
 
-  /**
-   * 🔥 FIX CRÍTICO: força comportamento de modal centralizado
-   */
   container.style.position = "fixed";
   container.style.top = "0";
   container.style.left = "0";
@@ -60,9 +67,6 @@ btn.onclick = function () {
     container,
     "189904786",
     function (res) {
-
-      console.log("CAPTCHA RESPONSE:", res);
-
       container.remove();
 
       if (res.ret === 0) {
@@ -71,11 +75,9 @@ btn.onclick = function () {
       } else {
         set("Captcha cancelado");
       }
-
     },
     {}
   );
 
   captcha.show();
-
 };

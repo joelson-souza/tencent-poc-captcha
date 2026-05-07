@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard CAPTCHA - POC TJRR</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+
+<body>
+
+    <h2>📊 Dashboard CAPTCHA - POC TJRR</h2>
+
+    <button onclick="render()">🔄 Atualizar</button>
+    <button onclick="clearData()">🧹 Limpar</button>
+
+    <div id="container" class="grid"></div>
+
+    <script>
+        function getData() {
+            return JSON.parse(localStorage.getItem("captcha_history") || "[]");
+        }
+
+        function safe(obj, path, fallback = "-") {
+            try {
+                return path.split(".").reduce((acc, key) => acc?.[key], obj) ?? fallback;
+            } catch {
+                return fallback;
+            }
+        }
+
+        function statusClass(status) {
+            if (status === "ATENDE") return "ok";
+            if (status === "NÃO ATENDE") return "fail";
+            return "warn";
+        }
+
+        function render() {
+            const data = getData();
+            const container = document.getElementById("container");
+
+            container.innerHTML = "";
+
+            if (!data.length) {
+                container.innerHTML = "<p>Nenhum dado encontrado</p>";
+                return;
+            }
+
+            data.forEach((item, index) => {
+
+                const div = document.createElement("div");
+                div.className = "card";
+
+                const score = safe(item, "captcha_result.Score", "N/A");
+                const code = safe(item, "captcha_result.CaptchaCode", "N/A");
+                const traceId = safe(item, "audit.traceId", "N/A");
+                const requestId = safe(item, "audit.tencent_request_id", "N/A");
+                const backendMs = safe(item, "validation.backend_validation_ms", "N/A");
+                const status = safe(item, "validation.status", "UNKNOWN");
+                const time = item.savedAt || "-";
+
+                div.innerHTML = `
+          <div class="title">#${index + 1} | Trace: ${traceId}</div>
+
+          <div class="row">
+            <span>Request Tencent</span>
+            <span>${requestId}</span>
+          </div>
+
+          <div class="row">
+            <span>Score</span>
+            <span>${score}</span>
+          </div>
+
+          <div class="row">
+            <span>CaptchaCode</span>
+            <span>${code}</span>
+          </div>
+
+          <div class="row">
+            <span>Backend ms</span>
+            <span>${backendMs} ms</span>
+          </div>
+
+          <div class="row">
+            <span>SLA</span>
+            <span>150 ms</span>
+          </div>
+
+          <div class="row">
+            <span>Status</span>
+            <span class="${statusClass(status)}">${status}</span>
+          </div>
+
+          <div class="row">
+            <span>Timestamp</span>
+            <span>${time}</span>
+          </div>
+        `;
+
+                container.appendChild(div);
+            });
+        }
+
+        function clearData() {
+            localStorage.removeItem("captcha_history");
+            render();
+        }
+
+        render();
+    </script>
+
+</body>
+
+</html>
