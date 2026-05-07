@@ -1,116 +1,116 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-body {
-  font-family: Arial, sans-serif;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #0f172a, #1e293b);
-  padding: 20px;
-}
+  body {
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    padding: 20px;
+  }
 
-/* FIX PRINCIPAL: separa layout da página do captcha overlay */
-.app-shell {
-  width: 100%;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  /* FIX PRINCIPAL: separa layout da página do captcha overlay */
+  .app-shell {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-.app-container {
-  width: 100%;
-  max-width: 520px;
-}
+  .app-container {
+    width: 100%;
+    max-width: 520px;
+  }
 
-.card {
-  background: #0b1220;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
-  padding: 28px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(8px);
-}
-
-.title {
-  color: #ffffff;
-  font-size: 22px;
-  margin-bottom: 20px;
-  text-align: center;
-  font-weight: 600;
-}
-
-.btn {
-  width: 100%;
-  padding: 12px 18px;
-  border: none;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
-  color: #fff;
-  font-size: 16px;
-  cursor: pointer;
-  transition: 0.2s ease-in-out;
-  margin-bottom: 18px;
-}
-
-.btn:hover {
-  transform: translateY(-1px);
-  background: linear-gradient(135deg, #3b82f6, #2563eb);
-}
-
-.btn:active {
-  transform: scale(0.98);
-}
-
-.status {
-  background: #020617;
-  color: #22c55e;
-  padding: 16px;
-  border-radius: 10px;
-  font-size: 13px;
-  min-height: 120px;
-  overflow-x: auto;
-  white-space: pre-wrap;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.metrics {
-  margin-top: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.metric {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  color: #cbd5e1;
-  font-size: 12px;
-}
-
-.bar {
-  height: 8px;
-  background: #1e293b;
-  border-radius: 6px;
-  overflow: hidden;
-}
-
-.bar > div {
-  height: 100%;
-  background: linear-gradient(90deg, #22c55e, #3b82f6);
-  width: 0%;
-  transition: width 0.4s ease;
-}
-
-@media (max-width: 600px) {
   .card {
-    padding: 18px;
+    background: #0b1220;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
   }
 
   .title {
-    font-size: 18px;
+    color: #ffffff;
+    font-size: 22px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 600;
   }
-}
+
+  .btn {
+    width: 100%;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    margin-bottom: 18px;
+  }
+
+  .btn:hover {
+    transform: translateY(-1px);
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+  }
+
+  .btn:active {
+    transform: scale(0.98);
+  }
+
+  .status {
+    background: #020617;
+    color: #22c55e;
+    padding: 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    min-height: 120px;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .metrics {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .metric {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    color: #cbd5e1;
+    font-size: 12px;
+  }
+
+  .bar {
+    height: 8px;
+    background: #1e293b;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .bar > div {
+    height: 100%;
+    background: linear-gradient(90deg, #22c55e, #3b82f6);
+    width: 0%;
+    transition: width 0.4s ease;
+  }
+
+  @media (max-width: 600px) {
+    .card {
+      padding: 18px;
+    }
+
+    .title {
+      font-size: 18px;
+    }
+  }

@@ -42,9 +42,6 @@ function safeMs(value) {
   return Number(v.toFixed(3));
 }
 
-/**
- * 💾 AUDITORIA PERSISTENTE (ESSENCIAL PARA POC TJPR)
- */
 function saveAuditLog(data) {
   const logPath = path.join(__dirname, "../audit-log.json");
 
@@ -99,12 +96,6 @@ router.post("/verify", async (req, res) => {
 
     const tBeforeIO = process.hrtime.bigint();
 
-    console.log("[TENCENT REQUEST START]", {
-      traceId,
-      time: new Date().toISOString(),
-      ip: audit.ip
-    });
-
     let result;
 
     try {
@@ -141,30 +132,14 @@ router.post("/verify", async (req, res) => {
 
     const backendMs = toMs(tBeforeIO - tStart);
     const tencentMs = toMs(tAfterIO - tBeforeIO);
-    const totalMs = toMs(tEnd - tStart);
 
     audit.logs = {
       backend_pure_ms: safeMs(backendMs),
-      tencent_ms: safeMs(tencentMs),
-      total_ms: safeMs(totalMs)
+      tencent_ms: safeMs(tencentMs)
     };
 
     audit.tencentRequestId = result?.RequestId || null;
 
-    /**
-     * 🔥 LOG AUDITÁVEL (EVIDÊNCIA FORTE)
-     */
-    console.log("[TENCENT RESPONSE]", {
-      traceId,
-      requestId: audit.tencentRequestId,
-      timestamp: new Date().toISOString(),
-      captchaCode: result?.CaptchaCode,
-      score: result?.Score
-    });
-
-    /**
-     * 💾 SALVAMENTO PERSISTENTE (PROVA REAL)
-     */
     saveAuditLog({
       ...audit,
       response: result
@@ -173,7 +148,6 @@ router.post("/verify", async (req, res) => {
     return res.json({
       traceId,
       Response: result,
-
       validation: {
         backend_validation_ms: audit.logs.backend_pure_ms,
         sla_limit_ms: 150,
@@ -182,7 +156,6 @@ router.post("/verify", async (req, res) => {
             ? "ATENDE"
             : "NÃO ATENDE"
       },
-
       audit
     });
 

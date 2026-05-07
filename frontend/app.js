@@ -1,15 +1,13 @@
 const btn = document.getElementById("btn");
 const status = document.getElementById("status");
+const redirectBtn = document.getElementById("redirectBtn");
 
-function set(obj) {
-  status.innerText =
-    typeof obj === "string"
-      ? obj
-      : JSON.stringify(obj, null, 2);
+function setStatus(text) {
+  status.innerText = text;
 }
 
 /**
- * 💾 salva histórico local (para dashboard)
+ * 💾 salva histórico local (dashboard)
  */
 function saveToDashboard(data) {
   const history = JSON.parse(localStorage.getItem("captcha_history") || "[]");
@@ -24,6 +22,13 @@ function saveToDashboard(data) {
   localStorage.setItem("captcha_history", JSON.stringify(history));
 }
 
+function showRedirect() {
+  redirectBtn.style.display = "block";
+  redirectBtn.onclick = () => {
+    window.location.href = "http://43.167.193.104:3001/dashboard";
+  };
+}
+
 async function sendToBackend(ticket, randstr) {
   const res = await fetch("/api/captcha/verify", {
     method: "POST",
@@ -36,7 +41,7 @@ async function sendToBackend(ticket, randstr) {
   const data = await res.json();
 
   const payload = {
-    captcha_result: data.Response,   // 🔥 CORRETO AGORA
+    captcha_result: data.Response,
     validation: data.validation,
     audit: {
       traceId: data.audit?.traceId,
@@ -45,9 +50,19 @@ async function sendToBackend(ticket, randstr) {
     }
   };
 
-  set(payload);
   saveToDashboard(payload);
+
+  /**
+   * 🔥 SOMENTE MENSAGEM DE CONFIRMAÇÃO
+   */
+  if (data?.Response?.CaptchaCode === 1) {
+    setStatus("✅ Captcha validado com sucesso!");
+    showRedirect();
+  } else {
+    setStatus("❌ Falha na validação do Captcha");
+  }
 }
+
 btn.onclick = function () {
   const container = document.createElement("div");
 
@@ -70,10 +85,10 @@ btn.onclick = function () {
       container.remove();
 
       if (res.ret === 0) {
-        set("Validando backend...");
+        setStatus("Validando backend...");
         sendToBackend(res.ticket, res.randstr);
       } else {
-        set("Captcha cancelado");
+        setStatus("Captcha cancelado");
       }
     },
     {}

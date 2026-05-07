@@ -9,7 +9,7 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 /**
- * 🔥 MIDDLEWARE: tracing simples
+ * 🔥 LOG HTTP
  */
 app.use((req, res, next) => {
   const start = process.hrtime.bigint();
@@ -33,7 +33,7 @@ app.use(cors());
 app.use(express.json());
 
 /**
- * 🔥 HEADER de tracing leve (POC TJPR)
+ * 🔥 TRACE HEADER
  */
 app.use((req, res, next) => {
   res.setHeader("x-trace-mode", "poc");
@@ -41,14 +41,34 @@ app.use((req, res, next) => {
 });
 
 const frontendPath = path.join(__dirname, "../../frontend");
+
+/**
+ * 🔥 STATIC FRONTEND
+ */
 app.use(express.static(frontendPath));
 
+/**
+ * 💥 FIX CRÍTICO: ROTA /dashboard
+ */
+app.get("/dashboard", (req, res) => {
+  res.sendFile(path.join(frontendPath, "dashboard.html"));
+});
+
+/**
+ * API
+ */
 app.use("/api/captcha", captchaRoutes);
 
+/**
+ * HEALTHCHECK
+ */
 app.get("/health", (req, res) => {
   res.json({ ok: true });
 });
 
+/**
+ * START SERVER
+ */
 app.listen(PORT, () => {
   console.log("🚀 Rodando na porta", PORT);
 });

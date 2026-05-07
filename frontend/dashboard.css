@@ -43,8 +43,18 @@ body {
     margin: 4px 0;
 }
 
-button {
+.header {
+    display: flex;
+    gap: 10px;
     margin-bottom: 15px;
+}
+
+button {
     padding: 8px 12px;
     cursor: pointer;
+}
+
+.status-live {
+    margin-left: auto;
+    color: #22c55e;
 }
