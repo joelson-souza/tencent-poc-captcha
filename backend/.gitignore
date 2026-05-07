@@ -1,4 +1,3 @@
-# /home/ubuntu/poc-captcha/backend/.gitignore
 # Dependências
 node_modules/
 
@@ -8,7 +7,9 @@ logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-/backend/src/audit-log.json
+
+# Ignorar audit log
+src/audit-log.json
 
 # Arquivos de ambiente
 .env
