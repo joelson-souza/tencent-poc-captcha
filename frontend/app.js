@@ -10,32 +10,50 @@ function setStatus(text) {
  * 💾 salva histórico local (dashboard)
  */
 function saveToDashboard(data) {
-  const history = JSON.parse(localStorage.getItem("captcha_history") || "[]");
+  const history = JSON.parse(
+    localStorage.getItem("captcha_history") || "[]"
+  );
 
   history.unshift({
     ...data,
     savedAt: new Date().toISOString()
   });
 
-  if (history.length > 50) history.pop();
+  if (history.length > 50) {
+    history.pop();
+  }
 
-  localStorage.setItem("captcha_history", JSON.stringify(history));
+  localStorage.setItem(
+    "captcha_history",
+    JSON.stringify(history)
+  );
 }
 
+/**
+ * 🔗 botão para abrir dashboard em NOVA ABA
+ */
 function showRedirect() {
   redirectBtn.style.display = "block";
+
   redirectBtn.onclick = () => {
-    window.location.href = "http://43.167.193.104:3001/dashboard";
+    window.open(
+      "http://43.167.193.104:3001/dashboard",
+      "_blank"
+    );
   };
 }
 
 async function sendToBackend(ticket, randstr) {
+
   const res = await fetch("/api/captcha/verify", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ ticket, randstr })
+    body: JSON.stringify({
+      ticket,
+      randstr
+    })
   });
 
   const data = await res.json();
@@ -53,17 +71,23 @@ async function sendToBackend(ticket, randstr) {
   saveToDashboard(payload);
 
   /**
-   * 🔥 SOMENTE MENSAGEM DE CONFIRMAÇÃO
+   * ✅ sucesso
    */
   if (data?.Response?.CaptchaCode === 1) {
+
     setStatus("✅ Captcha validado com sucesso!");
+
     showRedirect();
+
   } else {
+
     setStatus("❌ Falha na validação do Captcha");
+
   }
 }
 
 btn.onclick = function () {
+
   const container = document.createElement("div");
 
   container.style.position = "fixed";
@@ -81,16 +105,27 @@ btn.onclick = function () {
   const captcha = new TencentCaptcha(
     container,
     "189904786",
+
     function (res) {
+
       container.remove();
 
       if (res.ret === 0) {
+
         setStatus("Validando backend...");
-        sendToBackend(res.ticket, res.randstr);
+
+        sendToBackend(
+          res.ticket,
+          res.randstr
+        );
+
       } else {
+
         setStatus("Captcha cancelado");
+
       }
     },
+
     {}
   );
 
