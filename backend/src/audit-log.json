@@ -521,5 +521,26 @@
       "DeviceRiskCategory": "",
       "Score": 40
     }
+  },
+  {
+    "traceId": "trace_3e220d8556b661778117903182",
+    "timestamp": "2026-05-07T01:38:23.182Z",
+    "ip": "::ffff:190.107.160.119",
+    "tencentRequestId": "6facc91d-5e48-4cdf-9d3b-812f483f169a",
+    "logs": {
+      "backend_pure_ms": 0.034,
+      "tencent_ms": 238.405
+    },
+    "response": {
+      "RequestId": "6facc91d-5e48-4cdf-9d3b-812f483f169a",
+      "CaptchaCode": 1,
+      "CaptchaMsg": "OK",
+      "EvilLevel": 0,
+      "GetCaptchaTime": 0,
+      "SubmitCaptchaTime": 1778117900,
+      "EvilBitmap": 0,
+      "DeviceRiskCategory": "",
+      "Score": 40
+    }
   }
 ]

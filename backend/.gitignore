@@ -1,0 +1,38 @@
+# /home/ubuntu/poc-captcha/backend/.gitignore
+# Dependências
+node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+/backend/src/audit-log.json
+
+# Arquivos de ambiente
+.env
+.env.*
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Build / output
+dist/
+build/
+
+# Coverage
+coverage/
+
+# Cache
+.npm
+.cache
+
+# IDE / Editor
+.vscode/
+.idea/
+
+# Arquivos temporários
+*.tmp
+*.swp
