@@ -500,5 +500,26 @@
       "DeviceRiskCategory": "",
       "Score": 40
     }
+  },
+  {
+    "traceId": "trace_057657f2a93911778117714878",
+    "timestamp": "2026-05-07T01:35:14.878Z",
+    "ip": "::ffff:190.107.160.119",
+    "tencentRequestId": "6fe7e229-5274-436c-b4dc-6d4cc4d54162",
+    "logs": {
+      "backend_pure_ms": 0.035,
+      "tencent_ms": 233.153
+    },
+    "response": {
+      "RequestId": "6fe7e229-5274-436c-b4dc-6d4cc4d54162",
+      "CaptchaCode": 1,
+      "CaptchaMsg": "OK",
+      "EvilLevel": 0,
+      "GetCaptchaTime": 0,
+      "SubmitCaptchaTime": 1778117713,
+      "EvilBitmap": 0,
+      "DeviceRiskCategory": "",
+      "Score": 40
+    }
   }
 ]
