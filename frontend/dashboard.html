@@ -11,12 +11,47 @@
 
     <h2>📊 Dashboard CAPTCHA - POC TJRR</h2>
 
-    <button onclick="render()">🔄 Atualizar</button>
-    <button onclick="clearData()">🧹 Limpar</button>
+    <div class="header">
+        <button onclick="render()">🔄 Atualizar</button>
+        <button onclick="clearData()">🧹 Limpar</button>
+    </div>
 
-    <div id="container" class="grid"></div>
+    <div class="table-container">
+
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Trace</th>
+                    <th>Request Tencent</th>
+                    <th>Score</th>
+                    <th>CaptchaCode</th>
+                    <th>EvilLevel</th>
+                    <th>Backend ms</th>
+                    <th>SLA</th>
+                    <th>Status</th>
+                    <th>Timestamp</th>
+                </tr>
+            </thead>
+
+            <tbody id="tableBody"></tbody>
+
+        </table>
+
+    </div>
+
+    <div class="pagination">
+        <button onclick="prevPage()">⬅ Anterior</button>
+        <span id="pageInfo"></span>
+        <button onclick="nextPage()">Próximo ➡</button>
+    </div>
 
     <script>
+
+        const ROWS_PER_PAGE = 10;
+
+        let currentPage = 1;
+
         function getData() {
             return JSON.parse(localStorage.getItem("captcha_history") || "[]");
         }
@@ -36,78 +71,121 @@
         }
 
         function render() {
-            const data = getData();
-            const container = document.getElementById("container");
 
-            container.innerHTML = "";
+            const data = getData();
+
+            const tableBody = document.getElementById("tableBody");
+
+            const pageInfo = document.getElementById("pageInfo");
+
+            tableBody.innerHTML = "";
 
             if (!data.length) {
-                container.innerHTML = "<p>Nenhum dado encontrado</p>";
+
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="10">Nenhum dado encontrado</td>
+                    </tr>
+                `;
+
+                pageInfo.innerText = "0 / 0";
+
                 return;
             }
 
-            data.forEach((item, index) => {
+            const totalPages = Math.ceil(data.length / ROWS_PER_PAGE);
 
-                const div = document.createElement("div");
-                div.className = "card";
+            if (currentPage > totalPages) {
+                currentPage = totalPages;
+            }
+
+            const start = (currentPage - 1) * ROWS_PER_PAGE;
+
+            const end = start + ROWS_PER_PAGE;
+
+            const paginatedData = data.slice(start, end);
+
+            paginatedData.forEach((item, index) => {
 
                 const score = safe(item, "captcha_result.Score", "N/A");
+
                 const code = safe(item, "captcha_result.CaptchaCode", "N/A");
+
+                const evilLevel = safe(item, "captcha_result.EvilLevel", "N/A");
+
                 const traceId = safe(item, "audit.traceId", "N/A");
+
                 const requestId = safe(item, "audit.tencent_request_id", "N/A");
+
                 const backendMs = safe(item, "validation.backend_validation_ms", "N/A");
+
                 const status = safe(item, "validation.status", "UNKNOWN");
+
                 const time = item.savedAt || "-";
 
-                div.innerHTML = `
-          <div class="title">#${index + 1} | Trace: ${traceId}</div>
+                const tr = document.createElement("tr");
 
-          <div class="row">
-            <span>Request Tencent</span>
-            <span>${requestId}</span>
-          </div>
+                tr.innerHTML = `
+                    <td>${start + index + 1}</td>
+                    <td>${traceId}</td>
+                    <td>${requestId}</td>
+                    <td>${score}</td>
+                    <td>${code}</td>
+                    <td>${evilLevel}</td>
+                    <td>${backendMs} ms</td>
+                    <td>150 ms</td>
+                    <td class="${statusClass(status)}">${status}</td>
+                    <td>${time}</td>
+                `;
 
-          <div class="row">
-            <span>Score</span>
-            <span>${score}</span>
-          </div>
+                tableBody.appendChild(tr);
 
-          <div class="row">
-            <span>CaptchaCode</span>
-            <span>${code}</span>
-          </div>
-
-          <div class="row">
-            <span>Backend ms</span>
-            <span>${backendMs} ms</span>
-          </div>
-
-          <div class="row">
-            <span>SLA</span>
-            <span>150 ms</span>
-          </div>
-
-          <div class="row">
-            <span>Status</span>
-            <span class="${statusClass(status)}">${status}</span>
-          </div>
-
-          <div class="row">
-            <span>Timestamp</span>
-            <span>${time}</span>
-          </div>
-        `;
-
-                container.appendChild(div);
             });
+
+            pageInfo.innerText = `${currentPage} / ${totalPages}`;
+
+        }
+
+        function nextPage() {
+
+            const data = getData();
+
+            const totalPages = Math.ceil(data.length / ROWS_PER_PAGE);
+
+            if (currentPage < totalPages) {
+
+                currentPage++;
+
+                render();
+
+            }
+
+        }
+
+        function prevPage() {
+
+            if (currentPage > 1) {
+
+                currentPage--;
+
+                render();
+
+            }
+
         }
 
         function clearData() {
+
             localStorage.removeItem("captcha_history");
+
+            currentPage = 1;
+
             render();
+
         }
 
         render();
+
     </script>
 
 </body>
