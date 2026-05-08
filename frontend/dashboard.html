@@ -3,71 +3,203 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard CAPTCHA - POC TJRR</title>
     <link rel="stylesheet" href="dashboard.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 </head>
 
 <body>
 
-    <h2>📊 Dashboard CAPTCHA - POC TJRR</h2>
+    <div class="page-wrapper">
 
-    <div class="header">
-        <button onclick="render()">🔄 Atualizar</button>
-        <button onclick="clearData()">🧹 Limpar</button>
-    </div>
+        <div class="top-section">
 
-    <div class="table-container">
+            <div class="title-area">
+                <h2><i class="fa-solid fa-chart-bar"></i> Dashboard CAPTCHA - POC TJRR</h2>
+                <p>
+                    Monitoramento das validações e auditorias Tencent CAPTCHA
+                </p>
+            </div>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Trace</th>
-                    <th>Request Tencent</th>
-                    <th>Score</th>
-                    <th>CaptchaCode</th>
-                    <th>EvilLevel</th>
-                    <th>Backend ms</th>
-                    <th>SLA</th>
-                    <th>Status</th>
-                    <th>Timestamp</th>
-                </tr>
-            </thead>
+            <div class="header">
+                <button onclick="render()"><i class="fa-solid fa-rotate"></i> Atualizar</button>
+                <button onclick="clearData()"><i class="fa-regular fa-trash-can"></i> Limpar</button>
+            </div>
 
-            <tbody id="tableBody"></tbody>
+        </div>
 
-        </table>
+        <div class="dashboard-layout">
 
-    </div>
+            <!-- TABELA -->
 
-    <div class="pagination">
-        <button onclick="prevPage()">⬅ Anterior</button>
-        <span id="pageInfo"></span>
-        <button onclick="nextPage()">Próximo ➡</button>
+            <div class="table-card">
+
+                <div class="table-title">
+                    <h3>Histórico de Requisições</h3>
+                    <span class="live-badge"><i class="fa-solid fa-circle"></i> LIVE</span>
+                </div>
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>#</th>
+                                <th>Trace</th>
+                                <th>Request Tencent</th>
+                                <th>Score</th>
+                                <th>CaptchaCode</th>
+                                <th>EvilLevel</th>
+                                <th>Backend ms</th>
+                                <th>SLA</th>
+                                <th>Status</th>
+                                <th>Timestamp</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="tableBody"></tbody>
+
+                    </table>
+
+                </div>
+
+                <div class="pagination">
+                    <button onclick="prevPage()"><i class="fa-solid fa-angle-left"></i> Anterior</button>
+                    <span id="pageInfo"></span>
+                    <button onclick="nextPage()">Próximo <i class="fa-solid fa-angle-right"></i></button>
+                </div>
+
+            </div>
+
+            <!-- LEGENDA -->
+
+            <aside class="legend-panel">
+
+                <div class="legend-header">
+                    <h3><i class="fa-regular fa-newspaper"></i> Legenda dos Campos</h3>
+                    <p>
+                        Explicação resumida das métricas exibidas na tabela.
+                    </p>
+                </div>
+
+                <div class="legend-list">
+
+                    <div class="legend-item">
+                        <div class="legend-title">Trace</div>
+                        <div class="legend-description">
+                            ID interno usado para rastrear e debugar a requisição.
+                        </div>
+                    </div>
+
+                    <div class="legend-item">
+                        <div class="legend-title">Request Tencent</div>
+                        <div class="legend-description">
+                            Indica que a Tencent recebeu/processou a requisição.
+                        </div>
+                    </div>
+
+                    <div class="legend-item">
+                        <div class="legend-title">Score</div>
+                        <div class="legend-description">
+                            Pontuação de confiança indicando chance de ser um usuário legítimo.
+                        </div>
+                    </div>
+
+                    <div class="legend-item">
+                        <div class="legend-title">CaptchaCode</div>
+                        <div class="legend-description">
+                            Código do resultado da validação do captcha.
+                        </div>
+                    </div>
+
+                    <div class="legend-item">
+                        <div class="legend-title">EvilLevel</div>
+                        <div class="legend-description">
+                            Nível de risco/fraude detectado pela Tencent.
+                        </div>
+                    </div>
+
+                    <div class="legend-item">
+                        <div class="legend-title">Backend ms</div>
+                        <div class="legend-description">
+                            Tempo de processamento da validação em milissegundos.
+                        </div>
+                    </div>
+
+                    <div class="legend-item">
+                        <div class="legend-title">SLA</div>
+                        <div class="legend-description">
+                            Indica se a resposta ficou dentro do tempo esperado do serviço.
+                        </div>
+                    </div>
+
+                    <div class="legend-item">
+                        <div class="legend-title">Status</div>
+                        <div class="legend-description">
+                            Estado final da requisição (sucesso, erro, timeout etc.).
+                        </div>
+                    </div>
+
+                    <div class="legend-item">
+                        <div class="legend-title">Timestamp</div>
+                        <div class="legend-description">
+                            Data/hora da requisição em formato timestamp Unix.
+                        </div>
+                    </div>
+
+                </div>
+
+            </aside>
+
+        </div>
+
     </div>
 
     <script>
 
-        const ROWS_PER_PAGE = 10;
-
+        const ROWS_PER_PAGE = 6;
         let currentPage = 1;
 
         function getData() {
-            return JSON.parse(localStorage.getItem("captcha_history") || "[]");
+
+            return JSON.parse(
+                localStorage.getItem("captcha_history") || "[]"
+            );
+
         }
 
         function safe(obj, path, fallback = "-") {
+
             try {
-                return path.split(".").reduce((acc, key) => acc?.[key], obj) ?? fallback;
+
+                return path
+                    .split(".")
+                    .reduce((acc, key) => acc?.[key], obj) ?? fallback;
+
             } catch {
+
                 return fallback;
+
             }
+
         }
 
         function statusClass(status) {
+
             if (status === "ATENDE") return "ok";
+
             if (status === "NÃO ATENDE") return "fail";
+
             return "warn";
+
         }
 
         function render() {
@@ -84,19 +216,26 @@
 
                 tableBody.innerHTML = `
                     <tr>
-                        <td colspan="10">Nenhum dado encontrado</td>
+                        <td colspan="10" class="empty">
+                            Nenhum dado encontrado
+                        </td>
                     </tr>
                 `;
 
                 pageInfo.innerText = "0 / 0";
 
                 return;
+
             }
 
-            const totalPages = Math.ceil(data.length / ROWS_PER_PAGE);
+            const totalPages = Math.ceil(
+                data.length / ROWS_PER_PAGE
+            );
 
             if (currentPage > totalPages) {
+
                 currentPage = totalPages;
+
             }
 
             const start = (currentPage - 1) * ROWS_PER_PAGE;
@@ -107,19 +246,47 @@
 
             paginatedData.forEach((item, index) => {
 
-                const score = safe(item, "captcha_result.Score", "N/A");
+                const score = safe(
+                    item,
+                    "captcha_result.Score",
+                    "N/A"
+                );
 
-                const code = safe(item, "captcha_result.CaptchaCode", "N/A");
+                const code = safe(
+                    item,
+                    "captcha_result.CaptchaCode",
+                    "N/A"
+                );
 
-                const evilLevel = safe(item, "captcha_result.EvilLevel", "N/A");
+                const evilLevel = safe(
+                    item,
+                    "captcha_result.EvilLevel",
+                    "N/A"
+                );
 
-                const traceId = safe(item, "audit.traceId", "N/A");
+                const traceId = safe(
+                    item,
+                    "audit.traceId",
+                    "N/A"
+                );
 
-                const requestId = safe(item, "audit.tencent_request_id", "N/A");
+                const requestId = safe(
+                    item,
+                    "audit.tencent_request_id",
+                    "N/A"
+                );
 
-                const backendMs = safe(item, "validation.backend_validation_ms", "N/A");
+                const backendMs = safe(
+                    item,
+                    "validation.backend_validation_ms",
+                    "N/A"
+                );
 
-                const status = safe(item, "validation.status", "UNKNOWN");
+                const status = safe(
+                    item,
+                    "validation.status",
+                    "UNKNOWN"
+                );
 
                 const time = item.savedAt || "-";
 
@@ -142,7 +309,8 @@
 
             });
 
-            pageInfo.innerText = `${currentPage} / ${totalPages}`;
+            pageInfo.innerText =
+                `${currentPage} / ${totalPages}`;
 
         }
 
@@ -150,7 +318,9 @@
 
             const data = getData();
 
-            const totalPages = Math.ceil(data.length / ROWS_PER_PAGE);
+            const totalPages = Math.ceil(
+                data.length / ROWS_PER_PAGE
+            );
 
             if (currentPage < totalPages) {
 

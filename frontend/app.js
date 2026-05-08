@@ -37,7 +37,7 @@ function showRedirect() {
 
   redirectBtn.onclick = () => {
     window.open(
-      "http://43.167.193.104:3001/dashboard",
+      "http://43.157.158.2:3000/dashboard",
       "_blank"
     );
   };
@@ -104,7 +104,7 @@ btn.onclick = function () {
 
   const captcha = new TencentCaptcha(
     container,
-    "189904786",
+    "189911655",
 
     function (res) {
 

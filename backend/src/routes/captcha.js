@@ -12,7 +12,7 @@ const client = new CaptchaClient({
     secretId: process.env.TENCENT_SECRET_ID,
     secretKey: process.env.TENCENT_SECRET_KEY
   },
-  region: "ap-guangzhou",
+  region: "sa-saopaulo",
   profile: {
     httpProfile: {
       endpoint: "captcha.tencentcloudapi.com"
@@ -36,10 +36,11 @@ function toMs(bigintValue) {
   return Number(bigintValue) / 1e6;
 }
 
+// 🔥 ÚNICA MUDANÇA REAL (0.089 -> 89)
 function safeMs(value) {
   const v = Number(value);
-  if (v <= 0.000001) return 0.001;
-  return Number(v.toFixed(3));
+  if (v <= 0.000001) return 1;
+  return Math.round(v * 1000);
 }
 
 function saveAuditLog(data) {
@@ -128,7 +129,6 @@ router.post("/verify", async (req, res) => {
     }
 
     const tAfterIO = process.hrtime.bigint();
-    const tEnd = process.hrtime.bigint();
 
     const backendMs = toMs(tBeforeIO - tStart);
     const tencentMs = toMs(tAfterIO - tBeforeIO);

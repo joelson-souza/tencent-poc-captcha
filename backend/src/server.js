@@ -18,12 +18,12 @@ app.use((req, res, next) => {
     const end = process.hrtime.bigint();
     const durationMs = Number(end - start) / 1e6;
 
-    console.log("[HTTP]", {
-      method: req.method,
-      path: req.path,
-      status: res.statusCode,
-      duration_ms: Math.round(durationMs)
-    });
+    // console.log("[HTTP]", {
+    //   method: req.method,
+    //   path: req.path,
+    //   status: res.statusCode,
+    //   duration_ms: Math.round(durationMs)
+    // });
   });
 
   next();

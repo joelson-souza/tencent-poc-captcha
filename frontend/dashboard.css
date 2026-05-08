@@ -1,33 +1,104 @@
 body {
-    font-family: Arial;
+    font-family: "IBM Plex Sans", sans-serif;
     background: #0f172a;
     color: white;
     padding: 20px;
+    margin: 0;
 }
+
+/* WRAPPER */
+
+.page-wrapper {
+    width: 100%;
+    max-width: 1800px;
+    margin: 0 auto;
+}
+
+/* TOPO */
+
+.top-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.title-area h2 {
+    margin: 0;
+    margin-bottom: 5px;
+    font-size: 28px;
+    text-transform: uppercase;
+}
+
+.title-area p {
+    margin: 0;
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+/* BOTÕES */
 
 .header {
     display: flex;
     gap: 10px;
-    margin-bottom: 15px;
 }
 
 button {
-    padding: 8px 12px;
+    padding: 10px 14px;
     cursor: pointer;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     background: #1e293b;
     color: white;
+    transition: 0.2s;
+    font-weight: bold;
 }
 
 button:hover {
     background: #334155;
 }
 
-.table-container {
-    overflow-x: auto;
+/* CARD DA TABELA */
+
+.table-card {
+    background: #111827;
     border: 1px solid #334155;
-    border-radius: 8px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* CABEÇALHO DA TABELA */
+
+.table-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid #334155;
+}
+
+.table-title h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.live-badge {
+    background: rgba(34, 197, 94, 0.15);
+    color: #22c55e;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+/* TABELA */
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
 }
 
 table {
@@ -50,11 +121,32 @@ td {
 
 th {
     color: #38bdf8;
+    white-space: nowrap;
+}
+
+td {
+    color: #f8fafc;
+}
+
+/* evita quebrar somente colunas críticas */
+
+td:nth-child(2),
+td:nth-child(3),
+td:nth-child(10) {
+    white-space: nowrap;
 }
 
 tr:hover {
     background: #273449;
 }
+
+.empty {
+    text-align: center;
+    padding: 30px !important;
+    color: #94a3b8;
+}
+
+/* STATUS */
 
 .ok {
     color: #22c55e;
@@ -71,14 +163,111 @@ tr:hover {
     font-weight: bold;
 }
 
+/* PAGINAÇÃO */
+
 .pagination {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 15px;
-    margin-top: 15px;
+    padding: 16px;
+    border-top: 1px solid #334155;
 }
 
 #pageInfo {
     font-size: 14px;
+    font-weight: bold;
+}
+
+/* LEGENDA */
+
+.legend-panel {
+    margin-top: 20px;
+    background: #111827;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+/* CABEÇALHO LEGENDA */
+
+.legend-header {
+    margin-bottom: 18px;
+}
+
+.legend-header h3 {
+    margin: 0 0 8px 0;
+    font-size: 20px;
+}
+
+.legend-header p {
+    margin: 0;
+    color: #94a3b8;
+    font-size: 13px;
+}
+
+/* GRID DA LEGENDA */
+
+.legend-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+}
+
+/* ITEM LEGENDA */
+
+.legend-item {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    padding: 14px;
+    transition: 0.2s;
+}
+
+.legend-item:hover {
+    background: #273449;
+}
+
+.legend-title {
+    color: #38bdf8;
+    font-weight: bold;
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+.legend-description {
+    color: #cbd5e1;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* RESPONSIVO */
+
+@media (max-width: 768px) {
+
+    body {
+        padding: 15px;
+    }
+
+    .top-section {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .header {
+        width: 100%;
+    }
+
+    .header button {
+        width: 100%;
+    }
+
+    .title-area h2 {
+        font-size: 22px;
+    }
+
+    .legend-list {
+        grid-template-columns: 1fr;
+    }
+
 }
