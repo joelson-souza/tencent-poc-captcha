@@ -1,87 +1,40 @@
 const btn = document.getElementById("btn");
 const status = document.getElementById("status");
-const redirectBtn = document.getElementById("redirectBtn");
 
 function setStatus(text) {
   status.innerText = text;
 }
 
-/**
- * 💾 salva histórico local (dashboard)
- */
-function saveToDashboard(data) {
-  const history = JSON.parse(
-    localStorage.getItem("captcha_history") || "[]"
-  );
-
-  history.unshift({
-    ...data,
-    savedAt: new Date().toISOString()
-  });
-
-  if (history.length > 50) {
-    history.pop();
-  }
-
-  localStorage.setItem(
-    "captcha_history",
-    JSON.stringify(history)
-  );
-}
-
-/**
- * 🔗 botão para abrir dashboard em NOVA ABA
- */
-function showRedirect() {
-  redirectBtn.style.display = "block";
-
-  redirectBtn.onclick = () => {
-    window.open(
-      "http://43.157.158.2:3000/dashboard",
-      "_blank"
-    );
-  };
-}
-
 async function sendToBackend(ticket, randstr) {
 
-  const res = await fetch("/api/captcha/verify", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      ticket,
-      randstr
-    })
-  });
+  try {
 
-  const data = await res.json();
+    const res = await fetch("/api/captcha/verify", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        ticket,
+        randstr
+      })
+    });
 
-  const payload = {
-    captcha_result: data.Response,
-    validation: data.validation,
-    audit: {
-      traceId: data.audit?.traceId,
-      tencent_request_id: data.audit?.tencentRequestId,
-      backend_ms: data.validation?.backend_validation_ms
+    const data = await res.json();
+
+    if (data?.Response?.CaptchaCode === 1) {
+
+      setStatus("✅ Captcha validado com sucesso!");
+
+    } else {
+
+      setStatus("❌ Falha na validação do Captcha");
+
     }
-  };
 
-  saveToDashboard(payload);
+  } catch (err) {
 
-  /**
-   * ✅ sucesso
-   */
-  if (data?.Response?.CaptchaCode === 1) {
-
-    setStatus("✅ Captcha validado com sucesso!");
-
-    showRedirect();
-
-  } else {
-
-    setStatus("❌ Falha na validação do Captcha");
+    setStatus("Erro ao validar captcha");
 
   }
 }
@@ -104,7 +57,7 @@ btn.onclick = function () {
 
   const captcha = new TencentCaptcha(
     container,
-    "189911655",
+    "CAPTCHA_APP_ID",
 
     function (res) {
 
@@ -112,7 +65,7 @@ btn.onclick = function () {
 
       if (res.ret === 0) {
 
-        setStatus("Validando backend...");
+        setStatus("Validando...");
 
         sendToBackend(
           res.ticket,

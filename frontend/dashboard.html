@@ -4,13 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard CAPTCHA - POC TJRR</title>
+
+    <title>Dashboard CAPTCHA</title>
+
     <link rel="stylesheet" href="dashboard.css">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
 </head>
 
 <body>
@@ -20,28 +30,47 @@
         <div class="top-section">
 
             <div class="title-area">
-                <h2><i class="fa-solid fa-chart-bar"></i> Dashboard CAPTCHA - POC TJRR</h2>
+
+                <h2>
+                    <i class="fa-solid fa-chart-bar"></i>
+                    Dashboard CAPTCHA
+                </h2>
+
                 <p>
-                    Monitoramento das validações e auditorias Tencent CAPTCHA
+                    Histórico das validações realizadas
                 </p>
+
             </div>
 
             <div class="header">
-                <button onclick="render()"><i class="fa-solid fa-rotate"></i> Atualizar</button>
-                <button onclick="clearData()"><i class="fa-regular fa-trash-can"></i> Limpar</button>
+
+                <button onclick="render()">
+                    <i class="fa-solid fa-rotate"></i>
+                    Atualizar
+                </button>
+
+                <button onclick="clearData()">
+                    <i class="fa-regular fa-trash-can"></i>
+                    Limpar
+                </button>
+
             </div>
 
         </div>
 
         <div class="dashboard-layout">
 
-            <!-- TABELA -->
-
             <div class="table-card">
 
                 <div class="table-title">
-                    <h3>Histórico de Requisições</h3>
-                    <span class="live-badge"><i class="fa-solid fa-circle"></i> LIVE</span>
+
+                    <h3>Validações</h3>
+
+                    <span class="live-badge">
+                        <i class="fa-solid fa-circle"></i>
+                        LIVE
+                    </span>
+
                 </div>
 
                 <div class="table-container">
@@ -52,15 +81,11 @@
 
                             <tr>
                                 <th>#</th>
-                                <th>Trace</th>
-                                <th>Request Tencent</th>
                                 <th>Score</th>
                                 <th>CaptchaCode</th>
                                 <th>EvilLevel</th>
-                                <th>Backend ms</th>
-                                <th>SLA</th>
                                 <th>Status</th>
-                                <th>Timestamp</th>
+                                <th>Data/Hora</th>
                             </tr>
 
                         </thead>
@@ -72,86 +97,72 @@
                 </div>
 
                 <div class="pagination">
-                    <button onclick="prevPage()"><i class="fa-solid fa-angle-left"></i> Anterior</button>
+
+                    <button onclick="prevPage()">
+                        <i class="fa-solid fa-angle-left"></i>
+                        Anterior
+                    </button>
+
                     <span id="pageInfo"></span>
-                    <button onclick="nextPage()">Próximo <i class="fa-solid fa-angle-right"></i></button>
+
+                    <button onclick="nextPage()">
+                        Próximo
+                        <i class="fa-solid fa-angle-right"></i>
+                    </button>
+
                 </div>
 
             </div>
 
-            <!-- LEGENDA -->
-
             <aside class="legend-panel">
 
                 <div class="legend-header">
-                    <h3><i class="fa-regular fa-newspaper"></i> Legenda dos Campos</h3>
+
+                    <h3>
+                        <i class="fa-regular fa-newspaper"></i>
+                        Informações
+                    </h3>
+
                     <p>
-                        Explicação resumida das métricas exibidas na tabela.
+                        Resumo dos dados apresentados na tabela.
                     </p>
+
                 </div>
 
                 <div class="legend-list">
 
                     <div class="legend-item">
-                        <div class="legend-title">Trace</div>
-                        <div class="legend-description">
-                            ID interno usado para rastrear e debugar a requisição.
-                        </div>
-                    </div>
-
-                    <div class="legend-item">
-                        <div class="legend-title">Request Tencent</div>
-                        <div class="legend-description">
-                            Indica que a Tencent recebeu/processou a requisição.
-                        </div>
-                    </div>
-
-                    <div class="legend-item">
                         <div class="legend-title">Score</div>
                         <div class="legend-description">
-                            Pontuação de confiança indicando chance de ser um usuário legítimo.
+                            Pontuação de confiança da validação.
                         </div>
                     </div>
 
                     <div class="legend-item">
                         <div class="legend-title">CaptchaCode</div>
                         <div class="legend-description">
-                            Código do resultado da validação do captcha.
+                            Código retornado pela validação do captcha.
                         </div>
                     </div>
 
                     <div class="legend-item">
                         <div class="legend-title">EvilLevel</div>
                         <div class="legend-description">
-                            Nível de risco/fraude detectado pela Tencent.
-                        </div>
-                    </div>
-
-                    <div class="legend-item">
-                        <div class="legend-title">Backend ms</div>
-                        <div class="legend-description">
-                            Tempo de processamento da validação em milissegundos.
-                        </div>
-                    </div>
-
-                    <div class="legend-item">
-                        <div class="legend-title">SLA</div>
-                        <div class="legend-description">
-                            Indica se a resposta ficou dentro do tempo esperado do serviço.
+                            Nível de risco identificado pelo serviço.
                         </div>
                     </div>
 
                     <div class="legend-item">
                         <div class="legend-title">Status</div>
                         <div class="legend-description">
-                            Estado final da requisição (sucesso, erro, timeout etc.).
+                            Resultado final da validação.
                         </div>
                     </div>
 
                     <div class="legend-item">
-                        <div class="legend-title">Timestamp</div>
+                        <div class="legend-title">Data/Hora</div>
                         <div class="legend-description">
-                            Data/hora da requisição em formato timestamp Unix.
+                            Momento em que a validação foi realizada.
                         </div>
                     </div>
 
@@ -166,6 +177,7 @@
     <script>
 
         const ROWS_PER_PAGE = 6;
+
         let currentPage = 1;
 
         function getData() {
@@ -194,9 +206,9 @@
 
         function statusClass(status) {
 
-            if (status === "ATENDE") return "ok";
+            if (status === "SUCESSO") return "ok";
 
-            if (status === "NÃO ATENDE") return "fail";
+            if (status === "FALHA") return "fail";
 
             return "warn";
 
@@ -206,9 +218,11 @@
 
             const data = getData();
 
-            const tableBody = document.getElementById("tableBody");
+            const tableBody =
+                document.getElementById("tableBody");
 
-            const pageInfo = document.getElementById("pageInfo");
+            const pageInfo =
+                document.getElementById("pageInfo");
 
             tableBody.innerHTML = "";
 
@@ -216,7 +230,7 @@
 
                 tableBody.innerHTML = `
                     <tr>
-                        <td colspan="10" class="empty">
+                        <td colspan="6" class="empty">
                             Nenhum dado encontrado
                         </td>
                     </tr>
@@ -238,11 +252,13 @@
 
             }
 
-            const start = (currentPage - 1) * ROWS_PER_PAGE;
+            const start =
+                (currentPage - 1) * ROWS_PER_PAGE;
 
             const end = start + ROWS_PER_PAGE;
 
-            const paginatedData = data.slice(start, end);
+            const paginatedData =
+                data.slice(start, end);
 
             paginatedData.forEach((item, index) => {
 
@@ -264,44 +280,25 @@
                     "N/A"
                 );
 
-                const traceId = safe(
-                    item,
-                    "audit.traceId",
-                    "N/A"
-                );
+                const status =
+                    code === 1
+                        ? "SUCESSO"
+                        : "FALHA";
 
-                const requestId = safe(
-                    item,
-                    "audit.tencent_request_id",
-                    "N/A"
-                );
+                const time =
+                    item.savedAt || "-";
 
-                const backendMs = safe(
-                    item,
-                    "validation.backend_validation_ms",
-                    "N/A"
-                );
-
-                const status = safe(
-                    item,
-                    "validation.status",
-                    "UNKNOWN"
-                );
-
-                const time = item.savedAt || "-";
-
-                const tr = document.createElement("tr");
+                const tr =
+                    document.createElement("tr");
 
                 tr.innerHTML = `
                     <td>${start + index + 1}</td>
-                    <td>${traceId}</td>
-                    <td>${requestId}</td>
                     <td>${score}</td>
                     <td>${code}</td>
                     <td>${evilLevel}</td>
-                    <td>${backendMs} ms</td>
-                    <td>150 ms</td>
-                    <td class="${statusClass(status)}">${status}</td>
+                    <td class="${statusClass(status)}">
+                        ${status}
+                    </td>
                     <td>${time}</td>
                 `;
 
