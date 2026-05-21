@@ -2,47 +2,252 @@
 <html lang="pt-BR">
 
 <head>
+
   <meta charset="UTF-8">
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Tencent Captcha</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
+
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap"
-    rel="stylesheet"
-  >
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
 
   <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
 
-  <div class="app-shell">
+  <div class="background-blur blur-1"></div>
 
-    <div class="app-container">
+  <div class="background-blur blur-2"></div>
 
-      <div class="card">
+  <main class="app-shell">
 
-        <h2 class="title">Validação CAPTCHA</h2>
+    <div class="dashboard">
 
-        <button id="btn" class="btn-captcha">
-          Validar Captcha
-        </button>
+      <section class="left-panel">
 
-        <div id="status" class="status">
-          Aguardando validação...
+        <div class="badge">
+
+          <span class="badge-dot"></span>
+
+          Tencent Challenge Verification
+
         </div>
 
-      </div>
+        <h1 class="title">
+
+          CAPTCHA VALIDATION
+
+        </h1>
+
+        <p class="subtitle">
+
+          Tencent challenge flow demonstration.
+
+        </p>
+
+        <div class="hero-panel">
+
+          <div class="hero-icon">
+
+            <i class="fa-solid fa-user-shield"></i>
+
+          </div>
+
+          <div>
+
+            <div class="hero-title">
+
+              Anti-Bot Verification
+
+            </div>
+
+            <div class="hero-description">
+
+              Execute challenge and inspect validation.
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <button id="btn" class="btn-captcha">
+
+          <i class="fa-solid fa-user-shield"></i>
+
+          EXECUTE CAPTCHA VALIDATION
+
+        </button>
+
+        <div class="status-card">
+
+          <div class="status-header">
+
+            <div class="status-indicator">
+
+              <span class="pulse"></span>
+
+              Session Status
+
+            </div>
+
+            <div id="statusTag" class="status-tag">
+
+              STANDBY
+
+            </div>
+
+          </div>
+
+          <div id="status" class="status">
+
+            Awaiting validation...
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <aside class="right-panel">
+
+        <div class="info-card">
+
+          <div class="response-title">
+
+            CAPTCHA RESPONSE
+
+          </div>
+
+          <div class="response-grid">
+
+            <div class="response-item">
+
+              <label>
+                Ticket
+              </label>
+
+              <div id="ticketValue">
+                -
+              </div>
+
+            </div>
+
+            <div class="response-item">
+
+              <label>
+                RandStr
+              </label>
+
+              <div id="randstrValue">
+                -
+              </div>
+
+            </div>
+
+            <div class="response-item">
+
+              <label>
+                CaptchaCode
+              </label>
+
+              <div id="captchaCode">
+                -
+              </div>
+
+            </div>
+
+            <div class="response-item">
+
+              <label>
+                Validation
+              </label>
+
+              <div id="validationResult">
+                Waiting
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="captcha-settings">
+
+            <div class="settings-title">
+
+              CAPTCHA SETTINGS
+
+            </div>
+
+            <div class="setting-row">
+
+              <span>
+                Widget type
+              </span>
+
+              <strong>
+                Minimal
+              </strong>
+
+            </div>
+
+            <div class="setting-row">
+
+              <span>
+                CAPTCHA behavior
+              </span>
+
+              <strong>
+                One-Click
+              </strong>
+
+            </div>
+
+            <div class="setting-row">
+
+              <span>
+                Challenge type
+              </span>
+
+              <strong>
+                Slider
+              </strong>
+
+            </div>
+
+            <div class="setting-row">
+
+              <span>
+                Security level
+              </span>
+
+              <strong>
+                Loose
+              </strong>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </aside>
 
     </div>
 
-  </div>
+  </main>
 
   <script src="https://ca.turing.captcha.qcloud.com/TJNCaptcha-global.js"></script>
+
   <script src="app.js"></script>
 
 </body>

@@ -1,86 +1,288 @@
-const btn = document.getElementById("btn");
-const status = document.getElementById("status");
+const btn =
+  document.getElementById(
+    "btn"
+  );
 
-function setStatus(text) {
-  status.innerText = text;
+const status =
+  document.getElementById(
+    "status"
+  );
+
+const statusTag =
+  document.getElementById(
+    "statusTag"
+  );
+
+const ticketValue =
+  document.getElementById(
+    "ticketValue"
+  );
+
+const randstrValue =
+  document.getElementById(
+    "randstrValue"
+  );
+
+const captchaCode =
+  document.getElementById(
+    "captchaCode"
+  );
+
+const validationResult =
+  document.getElementById(
+    "validationResult"
+  );
+
+function setStatus(
+  text
+) {
+
+  status.innerText =
+    text;
+
 }
 
-async function sendToBackend(ticket, randstr) {
+function showValidationResponse(
+
+  title,
+
+  response
+
+) {
+
+  status.innerText =
+
+    `${title}
+
+${JSON.stringify(
+      response,
+      null,
+      2
+    )}`;
+
+}
+
+async function sendToBackend(
+
+  ticket,
+
+  randstr
+
+) {
 
   try {
 
-    const res = await fetch("/api/captcha/verify", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        ticket,
-        randstr
-      })
-    });
+    statusTag.innerText =
+      "VALIDATING";
 
-    const data = await res.json();
+    ticketValue.innerText =
+      ticket;
 
-    if (data?.Response?.CaptchaCode === 1) {
+    randstrValue.innerText =
+      randstr;
 
-      setStatus("✅ Captcha validado com sucesso!");
+    setStatus(
+      "Validating captcha..."
+    );
 
-    } else {
+    const res =
+      await fetch(
 
-      setStatus("❌ Falha na validação do Captcha");
+        "/api/captcha/verify",
+
+        {
+
+          method:
+            "POST",
+
+          headers: {
+
+            "Content-Type":
+              "application/json"
+
+          },
+
+          body:
+            JSON.stringify({
+
+              ticket,
+
+              randstr
+
+            })
+
+        }
+
+      );
+
+    const data =
+      await res.json();
+
+    captchaCode.innerText =
+
+      data?.Response
+        ?.CaptchaCode
+      ?? "-";
+
+    if (
+
+      data?.Response
+        ?.CaptchaCode === 1
+
+    ) {
+
+      statusTag.innerText =
+        "SUCCESS";
+
+      validationResult
+        .innerText =
+        "VALID";
+
+      showValidationResponse(
+
+        "✅ Captcha successfully validated",
+
+        data
+
+      );
 
     }
 
-  } catch (err) {
+    else {
 
-    setStatus("Erro ao validar captcha");
+      statusTag.innerText =
+        "FAILED";
+
+      validationResult
+        .innerText =
+        "INVALID";
+
+      showValidationResponse(
+
+        "❌ Captcha validation failed",
+
+        data
+
+      );
+
+    }
 
   }
+
+  catch (
+  err
+  ) {
+
+    statusTag.innerText =
+      "ERROR";
+
+    validationResult
+      .innerText =
+      "ERROR";
+
+    status.innerText =
+
+      `Backend validation error
+
+${err.message}`;
+
+  }
+
 }
 
-btn.onclick = function () {
+btn.onclick =
+  function () {
 
-  const container = document.createElement("div");
+    const container =
 
-  container.style.position = "fixed";
-  container.style.top = "0";
-  container.style.left = "0";
-  container.style.width = "100vw";
-  container.style.height = "100vh";
-  container.style.display = "flex";
-  container.style.alignItems = "center";
-  container.style.justifyContent = "center";
-  container.style.zIndex = "999999";
+      document.createElement(
+        "div"
+      );
 
-  document.body.appendChild(container);
+    container.style.position =
+      "fixed";
 
-  const captcha = new TencentCaptcha(
-    container,
-    "CAPTCHA_APP_ID",
+    container.style.top =
+      "0";
 
-    function (res) {
+    container.style.left =
+      "0";
 
-      container.remove();
+    container.style.width =
+      "100vw";
 
-      if (res.ret === 0) {
+    container.style.height =
+      "100vh";
 
-        setStatus("Validando...");
+    container.style.display =
+      "flex";
 
-        sendToBackend(
-          res.ticket,
-          res.randstr
-        );
+    container.style.alignItems =
+      "center";
 
-      } else {
+    container.style.justifyContent =
+      "center";
 
-        setStatus("Captcha cancelado");
+    container.style.zIndex =
+      "999999";
 
-      }
-    },
+    document.body.appendChild(
+      container
+    );
 
-    {}
-  );
+    const captcha =
 
-  captcha.show();
-};
+      new TencentCaptcha(
+
+        container,
+
+        "189955495",
+
+        function (
+          res
+        ) {
+
+          container.remove();
+
+          if (
+            res.ret === 0
+          ) {
+
+            setStatus(
+
+              "Executing validation..."
+
+            );
+
+            sendToBackend(
+
+              res.ticket,
+
+              res.randstr
+
+            );
+
+          }
+
+          else {
+
+            statusTag.innerText =
+              "CANCELED";
+
+            setStatus(
+
+              "Captcha canceled"
+
+            );
+
+          }
+
+        },
+
+        {}
+
+      );
+
+    captcha.show();
+
+  };
